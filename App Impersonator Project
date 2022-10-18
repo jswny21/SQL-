@@ -1,0 +1,33 @@
+#Mimicing one aspect of an app using SQL, in this case an video games character Experience gain.
+
+/* What does the app's SQL look like? */
+
+CREATE TABLE character ( id integer primary key autoincrement, name text, level integer, experience integer);
+
+INSERT INTO character (name, level, experience) values ("Evan", 0, 0);
+INSERT INTO character (name, level, experience) values ("Evan", 1, 0);
+INSERT INTO character (name, level, experience) values ("Evan", 2, 1000);
+INSERT INTO character (name, level, experience) values ("Evan", 3, 2000);
+INSERT INTO character (name, level, experience) values ("Evan", 4, 3000);
+
+#Pulling all info on the character.
+SELECT *
+FROM character;
+
+#Update the experience value from id 2.
+UPDATE character 
+SET experience = 500
+WHERE id = 2;
+
+#Pull info to reflect the changes.
+SELECT * 
+FROM character;
+
+#Delete the entire row.
+DELETE FROM character 
+WHERE id = 1;
+
+#Pull info to reflect the changes.
+SELECT * 
+FROM character;
+
