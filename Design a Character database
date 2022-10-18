@@ -1,0 +1,26 @@
+# Create a character ranking database
+
+/** characters
+drizzt
+goku
+evan
+anakin
+**/
+
+create table characters ( id integer primary key, name text, ranking integer,strength integer);
+
+insert into characters values (1, "drizzt",3,4);
+insert into characters values (2, "goku", 2, 1);
+insert into characters values (3, "evan", 4, 3);
+insert into characters values (4, "anakin",1,2);
+
+#Selecting tables organized in various ways
+select * from characters;
+select * from characters order by strength;
+select * from characters order by ranking;
+select * from characters order by name;
+select max (strength) from characters;
+select max(ranking) from characters;
+
+#Selecting tables with a character strength greater than or equal to 2
+select * from characters where strength <= 2;
