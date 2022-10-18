@@ -1,0 +1,64 @@
+#Create table about these famous people and what they do here 
+
+/* Singers
+Michael Jackson
+Fall out Boy
+Eminem
+*/
+
+CREATE TABLE singers (id INTEGER PRIMARY KEY AUTOINCREMENT, name text);
+CREATE TABLE Hometown (id INTEGER PRIMARY KEY AUTOINCREMENT, hometown_id integer, hometown_name text);
+CREATE TABLE songs (id integer primary key AUTOINCREMENT, artist_id integer, song_name text);
+CREATE TABLE ASongs (id INTEGER PRIMARY KEY AUTOINCREMENT, artistname text, hometown text, songname text);
+
+
+INSERT INTO singers (name) VALUES ('Michael Jackson');
+INSERT INTO singers (name) VALUES ('Fall out Boy');
+INSERT INTO singers (name) VALUES ('Eminem');
+
+
+INSERT INTO hometown (hometown_id, hometown_name) VALUES ( 1, "Gary,Indiana");
+INSERT INTO hometown (hometown_id, hometown_name) VALUES ( 2, "Wilmette,Illinois");
+INSERT INTO hometown (hometown_id, hometown_name) VALUES ( 3, "Detroit, Michigan");
+
+INSERT INTO songs (artist_id, song_name) VALUES (1,"Billie Jean");
+INSERT INTO songs (artist_id, song_name) VALUES (1,"Remember the Time");
+INSERT INTO songs (artist_id, song_name) VALUES (1,"Man in the Mirror");
+INSERT INTO songs (artist_id, song_name) VALUES (2,"Dance Dance");
+INSERT INTO songs (artist_id, song_name) VALUES (2,"Saturday");
+INSERT INTO songs (artist_id, song_name) VALUES (2,"Sugar we're going down");
+INSERT INTO songs (artist_id, song_name) VALUES (3,"Lose Yourself");
+INSERT INTO songs (artist_id, song_name) VALUES (3,"Rap God");
+INSERT INTO songs (artist_id, song_name) VALUES (3,"Godzilla" );
+
+
+INSERT INTO ASongs (artistname, songname) VALUES (1,1);
+INSERT INTO ASongs (artistname, songname) VALUES (1,2);
+INSERT INTO ASongs (artistname, songname) VALUES (1,3);
+INSERT INTO ASongs (artistname, songname) VALUES (2,4);
+INSERT INTO ASongs (artistname, songname) VALUES (2,5);
+INSERT INTO ASongs (artistname, songname) VALUES (2,6);
+INSERT INTO ASongs (artistname, songname) VALUES (3,7);
+INSERT INTO ASongs (artistname, songname) VALUES (3,8);
+INSERT INTO ASongs (artistname, songname) VALUES (3,9);
+
+#Display table showing all information.
+SELECT * 
+FROM singers;
+
+#Joining two tables equating the singer and their hometown.
+SELECT singers.id,singers.name, Hometown.hometown_name
+FROM singers
+JOIN Hometown
+ON singers.id = Hometown.id;
+
+
+#Joining three tables equating the singer, their hometown, and the songs they have written.
+SELECT singers.id, singers.name, songs.song_name, Hometown.hometown_name
+FROM ASongs
+JOIN singers
+ON ASongs.id = singers.id
+JOIN songs
+ON ASongs.id = songs.artist_id
+JOIN hometown
+ON ASongs.id = hometown.hometown_id;
