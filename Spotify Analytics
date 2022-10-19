@@ -79,3 +79,18 @@ SELECT artist_name,
   FROM spotifydata
  GROUP BY track_name
  ORDER BY popularity DESC;
+
+/* Created a temptable that only shows artists with a popularity rankings of 90 or higher, and labels them as "Top Star"*/
+WITH tempTable AS (
+    SELECT artist_name,
+           Popularity
+      FROM spotifydata
+    HAVING avg(popularity) >= 90
+)
+SELECT artist_name,
+       round(avg(popularity), 2),
+       CASE WHEN avg(popularity) >= 90 THEN "Top Star" ELSE "" END AS star_ranking
+  FROM spotifydata
+ WHERE popularity >= 90
+ GROUP BY artist_name
+ ORDER BY popularity DESC;
