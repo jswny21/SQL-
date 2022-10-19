@@ -1,0 +1,96 @@
+
+#Chart 1
+#This tableau code shows us how both how much employee growth there has been, but also breaks that down by gender.
+use employees_mod;
+
+SELECT 
+    YEAR(tde.from_date) AS calender_year,
+    temp.gender,
+    COUNT(temp.emp_no) AS num_of_employees
+FROM
+    t_employees temp
+        JOIN
+    t_dept_emp tde ON temp.emp_no = tde.emp_no
+GROUP BY calender_year , temp.gender
+HAVING calender_year > 1990;
+
+
+#Chart 2
+#This code shows the active employees in each department, also including the gender variance.
+SELECT 
+    d.dept_name,
+    ee.gender,
+    dm.emp_no,
+    dm.from_date,
+    dm.to_date,
+    e.calendar_year,
+    CASE
+        WHEN
+            YEAR(dm.to_date) >= e.calendar_year
+                AND YEAR(dm.from_date) <= e.calendar_year
+        THEN
+            1
+        ELSE 0
+    END AS active_employee
+FROM
+    (SELECT 
+        YEAR(hire_date) AS calendar_year
+    FROM
+        t_employees
+    GROUP BY calendar_year) e
+        CROSS JOIN
+    t_dept_manager dm
+        JOIN
+    t_departments d ON dm.dept_no = d.dept_no
+        JOIN
+    t_employees ee ON dm.emp_no = ee.emp_no
+GROUP BY dm.emp_no , calendar_year;
+
+
+#Chart 3
+#This code shows the average salary growth year-to-year of both male and female.
+SELECT 
+    e.gender,
+    d.dept_name,
+    ROUND(AVG(s.salary), 2),
+    YEAR(s.from_date) AS calendar_year
+FROM
+    t_salaries s
+        JOIN
+    t_employees e ON s.emp_no = e.emp_no
+        JOIN
+    t_dept_emp de ON e.emp_no = de.emp_no
+        JOIN
+    t_departments d ON de.dept_no = d.dept_no
+GROUP BY e.gender , d.dept_name , calendar_year
+HAVING calendar_year <= 2002
+ORDER BY d.dept_no;
+
+
+#Chart 4
+#This code was used to pull info on the average male to female salary in each department as it currently stands.
+drop procedure if exists filter_salary;
+
+DELIMITER $$
+create procedure filter_salary(in p_min_salary float, in p_max_salary float)
+begin
+	select
+		e.gender,
+		round(avg(s.salary),2) as avg_salary,
+		d.dept_name
+	from
+		t_salaries s
+			join
+		t_employees e on s.emp_no = e.emp_no
+			join
+		t_dept_emp de on e.emp_no = de.emp_no
+			join
+		t_departments d on de.dept_no = d.dept_no
+	where s.salary between p_min_salary and p_max_salary
+    group by d.dept_no, e.gender;
+
+end$$
+
+DELIMITER ;
+
+call filter_salary(50000,90000);
