@@ -71,3 +71,38 @@ SELECT product,
  WHERE location LIKE '%Los Angeles%'
  GROUP BY product
  ORDER BY quantity ASC;
+
+/*Which locations in New York recieved at least 3 orders in January, and how many orders did they each receive?*/
+SELECT location,
+       sum(quantity) 
+  FROM jansales
+ WHERE location LIKE '%New York%' AND 
+       quantity >= 3
+ GROUP BY location;
+
+/* How many of each type of headphone were sold in February?*/
+SELECT product,
+       sum(quantity) 
+  FROM febsales
+ WHERE product LIKE '%headphones%'
+ GROUP BY product;
+
+/* What was the average amount spent per account in February?*/
+SELECT round(sum(f.quantity * price) / count(c.acctnum), 2) 
+  FROM customers c
+       JOIN
+       febsales f ON c.order_id = f.orderid;
+
+/* What was the average quantity of products purchased per account in February?*/
+SELECT round(sum(f.quantity) / count(c.acctnum), 2) 
+  FROM customers c
+       JOIN
+       febsales f ON c.order_id = f.orderid;
+
+/* Which product brought in the most revenue in January and how much revenue did it bring in total?*/
+SELECT DISTINCT product,
+                sum(price) AS price
+  FROM jansales
+ GROUP BY product
+ ORDER BY sum(quantity * price) DESC
+ LIMIT 1;
