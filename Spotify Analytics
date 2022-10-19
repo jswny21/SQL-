@@ -1,6 +1,6 @@
-# For this project, I downloaded Spotify data from Kaggle.
-# Then I created a table to insert Spotify data into.
-# Finally, I performed analytics on the data using SQL. 
+/* For this project, I downloaded Spotify data from Kaggle.
+ Then I created a table to insert Spotify data into.
+ Finally, I performed analytics on the data using SQL.*/ 
 
 #Creating the table: 
 CREATE TABLE BIT_DB.Spotifydata (
@@ -24,6 +24,58 @@ duration_ms integer NOT NULL,
 time_signature integer NOT NULL 
 )
 
-#Then I inserted the Spotify Data .csv into the table.
+/*Then I inserted the Spotify Data .csv into the table.
 
-#Next, I explored the data using the following SQL.
+Next, I explored the data using the following SQL. 
+
+I start by examining the entire table*/
+select * from spotifydata;
+
+/*Then I determined the avg popularity, danceability, and energy by artist and track.*/ 
+SELECT artist_name,
+       track_name,
+       avg(popularity),
+       avg(danceability),
+       avg(energy) 
+  FROM BIT_DB.spotifydata
+ GROUP BY artist_name,
+          track_name
+ ORDER BY popularity ASC;
+
+/*Then I determined the which tracks have a duration higher than 20000ms by artist and track*/
+SELECT artist_name,
+       track_name,
+       duration_ms
+  FROM spotifydata
+ WHERE duration_ms > 200000
+ GROUP BY duration_ms
+ ORDER BY duration_ms asc;
+ 
+/*Which songs are more popular based on tempo*/
+SELECT artist_name,
+       track_name,
+       popularity,
+       tempo
+  FROM spotifydata
+ GROUP BY tempo
+ ORDER BY popularity DESC
+ LIMIT 10;
+
+/*What are the loudest songs, and how dancable are they?*/
+SELECT artist_name,
+       track_name,
+       loudness,
+       danceability
+  FROM spotifydata
+ GROUP BY track_name
+ ORDER BY loudness ASC;
+
+/*How much energy is in the most popular songs, and whats their tempo?*/
+SELECT artist_name,
+       track_name,
+       energy,
+       tempo,
+       popularity
+  FROM spotifydata
+ GROUP BY track_name
+ ORDER BY popularity DESC;
