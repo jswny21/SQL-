@@ -62,3 +62,12 @@ SELECT count(c.acctnum) AS acctnum,
        febsales f ON c.order_id = f.orderid
  WHERE quantity >= 2
  GROUP BY quantity;
+
+/* List all products sold in Los Angeles in February, and include how many of each were sold*/
+SELECT product,
+       sum(quantity),
+       location
+  FROM febsales
+ WHERE location LIKE '%Los Angeles%'
+ GROUP BY product
+ ORDER BY quantity ASC;
