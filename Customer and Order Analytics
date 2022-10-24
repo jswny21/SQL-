@@ -1,5 +1,5 @@
 
-/* What column are in the customers table?*/
+/* What columns are in the customers table?*/
 SELECT *
   FROM bit_db.customers
  LIMIT 20;
