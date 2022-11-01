@@ -1,0 +1,111 @@
+/*query the entire table to search data*/
+SELECT 
+    *
+FROM
+    netflix1;
+
+
+/*Querying and filtering data by a specific country*/
+SELECT 
+    title, director, country
+FROM
+    netflix1
+WHERE
+    country = 'United States'
+GROUP BY title
+ORDER BY title ASC;
+
+
+/* Grouping title count by country released in*/
+SELECT 
+    COUNT(title), country
+FROM
+    netflix1
+GROUP BY country
+ORDER BY title ASC;
+
+
+/*filtering data of titles released after 2000*/
+SELECT 
+    type, title, director, release_year, rating
+FROM
+    netflix1
+WHERE
+    release_year >= 2000
+GROUP BY title
+ORDER BY release_year ASC;
+
+
+/* Counting sub query of TV Shows vs Movies */
+SELECT 
+    (SELECT 
+            COUNT(type)
+        FROM
+            netflix1
+        WHERE
+            type = 'TV Show') AS TV_count,
+    (SELECT 
+            COUNT(type)
+        FROM
+            netflix1
+        WHERE
+            type = 'Movie') AS Movie_count
+FROM
+    netflix1
+GROUP BY type
+LIMIT 1;
+
+
+/*Number of credits attributed to a director*/
+SELECT 
+    director, COUNT(director) AS credits
+FROM
+    netflix1
+GROUP BY director
+ORDER BY credits DESC
+LIMIT 11;
+
+
+/*Counting Genres*/
+SELECT 
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like  '%Comedies%') AS Comedies,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like  '%International Movies%') AS International_movies,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Music & Musicals%') AS Music_and_Musicals,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Documentaries%') AS Documentaries,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Children & Family Movies%') AS Children_and_Family_Movies,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Dramas%') AS Dramas,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%TV Comedies%') AS TV_Comedies,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Romantic Movies%') AS Romantic_Movies,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Action & Adventure%') AS Action_and_Adventure,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Thrillers%') AS Thrillers,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Independent Movies%') AS Independant_Movies,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Anime Series%') AS Anime_Series,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Stand-Up Comedy%') AS Stand_Up_Comedy,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Crime TV Shows%') AS Crime_TV_Shows,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Classic Movies%') AS Classic_Movies,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Cult Movies%') AS Cult_Movies,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Docuseries%') AS Docuseries,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Reality TV%') AS Reality_TV,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Sci-Fi & Fantasy%') AS SciFi_and_Fantasy,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%International TV Shows%') AS International_TV_Shows,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%TV Dramas%') AS TV_Dramas,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%British TV Shows%') AS British_TV_Shows,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Science & Nature TV%') AS Science_and_Nature_TV,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Horror Movies%') AS Horror_Movies,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Spanish-Language TV Shows%') AS Spanish_Language_TV_Shows,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Romantic TV Shows%') AS Romantic_TV_Shows,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%TV Action & Adventure%') AS TV_Action_and_Adventure,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Anime Features%') AS Anime_Features,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Korean TV Shows%') AS Korean_TV_Shows,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%TV Mysteries%') AS TV_Mysteries,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Stand-Up Comedy & Talk Shows%') AS Stand_Up_Comedy_and_Talk_Shows,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Faith & Spirituality%') AS Faith_and_Spirituality,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Sports Movies%') AS Sports_Movies,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%LGBTQ Movies%') AS LGBTQ_Movies,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%TV Sci-Fi & Fantasy%') AS TV_Sci_Fi_and_Fantasy,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%TV Thrillers%') AS TV_Thrillers,
+    (SELECT COUNT(listed_in) FROM netflix1 WHERE listed_in like '%Teen TV Shows%') AS Teen_TV_Shows
+FROM
+    netflix1
+GROUP BY type
+LIMIT 1;
